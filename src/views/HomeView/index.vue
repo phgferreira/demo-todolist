@@ -1,28 +1,50 @@
 <template>
   <h1>Home Page</h1>
     <v-container class="pa-16">
-        <v-text-field v-model="tarefa" placeholder="Digite a tarefa e tecle Enter" @keyup.enter="adicionarTarefa" append-inner-icon="mdi-magnify" />
-        <v-list :lines="'one'">
-            <v-list-item v-for="tar in tarefas" :key="tar" :title="tar" />
-        </v-list>
+        <v-text-field
+            v-model="nomeTarefa"
+            :autofocus="true"
+            placeholder="Digite a tarefa e tecle Enter"
+            @keyup.enter="adicionarTarefa"
+            append-inner-icon="mdi-magnify"
+        />
+      <v-list>
+        <v-list-item v-for="tarefa in tarefas" :key="tarefa.nome">
+          <v-row>
+            <v-col>
+              <v-switch v-model="tarefa.done" :label="tarefa.nome" class="ml-3" hide-details />
+            </v-col>
+            <v-col>
+              <v-btn color="red" :icon="true">
+                <font-awesome-icon icon="fa-trash-can" />
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-list-item>
+
+      </v-list>
     </v-container>
 </template>
 
 <script lang="ts">
-import {ref} from "vue";
+import {reactive, ref} from "vue";
+import Tarefa from "@/model/Tarefa";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 export default {
     name: 'HomeView',
+  components: {FontAwesomeIcon},
     setup() {
-        let tarefa = ref('');
-        let tarefas: string[] = [];
+        let nomeTarefa = ref('');
+        let tarefas: Tarefa[] = reactive([]);
 
         function adicionarTarefa() {
-            tarefas.push(tarefa.value);
-            tarefa.value = '';
+          const tarefa: Tarefa = { nome: nomeTarefa.value, done: false };
+            tarefas.push(tarefa);
+            nomeTarefa.value = '';
         }
 
-        return { tarefa, tarefas, adicionarTarefa}
+        return { nomeTarefa, tarefas, adicionarTarefa}
     }
 }
 </script>
