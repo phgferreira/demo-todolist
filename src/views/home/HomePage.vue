@@ -1,4 +1,5 @@
 <template>
+  <v-app>
   <h1>Home Page</h1>
     <v-container class="pa-16">
         <v-text-field
@@ -28,17 +29,14 @@
 
       </v-list>
     </v-container>
+  </v-app>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import {reactive, ref} from "vue";
 import Tarefa from "@/model/Tarefa";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-export default {
-    name: 'HomeView',
-  components: {FontAwesomeIcon},
-    setup() {
         let nomeTarefa = ref('');
         let tarefas: Tarefa[] = reactive([]);
 
@@ -47,8 +45,4 @@ export default {
             tarefas.push(tarefa);
             nomeTarefa.value = '';
         }
-
-        return { nomeTarefa, tarefas, adicionarTarefa}
-    }
-}
 </script>
