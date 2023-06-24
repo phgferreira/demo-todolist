@@ -12,7 +12,11 @@
         <v-list-item v-for="tarefa in tarefas" :key="tarefa.nome">
           <v-row>
             <v-col>
-              <v-switch v-model="tarefa.done" :label="tarefa.nome" class="ml-3" hide-details />
+              <v-switch v-model="tarefa.doing" :label="tarefa.nome" class="ml-3" hide-details>
+                <template #label>
+                  {{ tarefa.nome }} <v-spacer/> <span v-if="tarefa.doing" class="font-weight-thin float-left text-green">[em andamento]</span>
+                </template>
+              </v-switch>
             </v-col>
             <v-col>
               <v-btn color="red" :icon="true">
@@ -39,7 +43,7 @@ export default {
         let tarefas: Tarefa[] = reactive([]);
 
         function adicionarTarefa() {
-          const tarefa: Tarefa = { nome: nomeTarefa.value, done: false };
+          const tarefa: Tarefa = { nome: nomeTarefa.value, doing: false, done: false };
             tarefas.push(tarefa);
             nomeTarefa.value = '';
         }
