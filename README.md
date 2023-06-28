@@ -40,3 +40,19 @@ Instalação dos componentes para Vue 3
 ```
 npm i --save @fortawesome/vue-fontawesome@latest-3
 ```
+
+### Vuetify
+Biblioteca com componentes prontos para serem usados na página.
+
+Documentação: [Vuetify Get Start](https://vuetifyjs.com/en/getting-started/installation/)
+
+#### Dependências
+Existem dependências que precisam ser instaladas para o correto funcionamento de alguns componentes:
+```
+npm i @mdi/font sass
+```
+Também é necessário inserir os seguintes importes no `main.ts`:
+```
+import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify/dist/vuetify.min.css'
+```
