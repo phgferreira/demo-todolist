@@ -1,32 +1,34 @@
 <template>
   <v-app>
-  <h1>Home Page</h1>
+    <h1>Home Page</h1>
     <v-container class="pa-16">
-        <v-text-field
-            v-model="nomeTarefa"
-            :autofocus="true"
-            placeholder="Digite a tarefa e tecle Enter"
-            @keyup.enter="adicionarTarefa"
-            append-inner-icon="mdi-magnify"
-        />
-      <v-list>
-        <v-list-item v-for="tarefa in tarefas" :key="tarefa.nome">
-          <v-row>
-            <v-col>
-              <v-switch v-model="tarefa.doing" :label="tarefa.nome" class="ml-3" hide-details>
-                <template #label>
-                  {{ tarefa.nome }} <v-spacer/> <span v-if="tarefa.doing" class="font-weight-thin float-left text-green">[em andamento]</span>
-                </template>
-              </v-switch>
-            </v-col>
-            <v-col>
-              <v-btn color="red" :icon="true">
-                <font-awesome-icon icon="fa-trash-can" />
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-list-item>
+      <v-text-field
+          v-model="nomeTarefa"
+          :autofocus="true"
+          placeholder="Digite a tarefa"
+          @keyup="handleKeyUp"
+      />
 
+      <v-list density="compact">
+        <v-list-item v-for="(tarefa, index) in tarefas" :key="tarefa.id">
+          <template #prepend>
+            <v-row>
+              <v-col>
+                <v-checkbox v-model="tarefa.done" color="success" density="comfortable"/>
+              </v-col>
+              <v-col><v-switch v-model="tarefa.doing" color="warning"/></v-col>
+            </v-row>
+          </template>
+          <template #title>
+            {{ tarefa.nome }}
+          </template>
+          <template #append>
+            <v-btn density="compact" color="red" :icon="true" variant="elevated" @click="excluir(index)">
+              <font-awesome-icon :icon="['fas', 'trash-can']"/>
+            </v-btn>
+          </template>
+          <template #subtitle>descrição</template>
+        </v-list-item>
       </v-list>
     </v-container>
   </v-app>
@@ -37,12 +39,31 @@ import {reactive, ref} from "vue";
 import Tarefa from "@/model/Tarefa";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-        let nomeTarefa = ref('');
-        let tarefas: Tarefa[] = reactive([]);
+const nomeTarefa = ref('');
+const tarefas: Tarefa[] = reactive([]);
 
-        function adicionarTarefa() {
-          const tarefa: Tarefa = { nome: nomeTarefa.value, doing: false, done: false };
-            tarefas.push(tarefa);
-            nomeTarefa.value = '';
-        }
+function handleKeyUp(event: KeyboardEvent) {
+  if (event.key === 'Enter') {
+    const tarefa = gerarTarefa();
+    if (event.ctrlKey) {
+      tarefa.doing = true;
+    }
+  }
+}
+
+function gerarTarefa() {
+  const nextId = tarefas.length === 0 ? 1 : Math.max(...tarefas.map((tarefa) => tarefa.id)) + 1;
+
+  const tarefa: Tarefa = new Tarefa(nomeTarefa.value);
+  tarefa.id = nextId;
+  tarefas.push(tarefa);
+  nomeTarefa.value = '';
+  return tarefa;
+}
+
+function excluir(index: number) {
+  const response = confirm(`Tem certeza que seja excluir a tarefa ${tarefas[index].nome} ?`);
+  if (response) tarefas.splice(index, 1);
+}
+
 </script>
