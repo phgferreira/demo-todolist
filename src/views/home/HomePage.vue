@@ -34,6 +34,15 @@
       </v-list>
       <v-footer>{{store.getters.concluido}}/{{store.getters.total}}</v-footer>
     </v-container>
+    <v-dialog v-model="loading" width="auto" transition="dialog-bottom-transition">
+      <v-card class="pa-16 rounded-circle">
+        <h1>CARREGANDO ...</h1>
+        <v-progress-linear
+            :indeterminate="true"
+            color="cyan"
+        ></v-progress-linear>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -65,12 +74,14 @@ async function handleKeyUp(event: KeyboardEvent) {
   }
 }
 
-function excluir(id: number) {
+async function excluir(id: number) {
+  loading.value = true;
   const tarefa = store.state.tarefas.find((tar) => tar.id === id);
   if (tarefa) {
     const response = confirm(`Tem certeza que seja excluir a tarefa ${tarefa.nome} ?`);
-    if (response) store.dispatch('excluir', tarefa.id);
+    if (response) await store.dispatch('excluir', tarefa.id);
   }
+  loading.value = false;
 }
 
 </script>
