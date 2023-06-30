@@ -10,20 +10,22 @@
       />
 
       <v-list density="compact">
-        <v-list-item v-for="(tarefa, index) in tarefas" :key="tarefa.id">
+        <v-list-item v-for="(tarefa) in store.state.tarefas" :key="tarefa.id">
           <template #prepend>
             <v-row>
               <v-col>
                 <v-checkbox v-model="tarefa.done" color="success" density="comfortable"/>
               </v-col>
-              <v-col><v-switch v-model="tarefa.doing" color="warning"/></v-col>
+              <v-col>
+                <v-switch v-model="tarefa.doing" color="warning"/>
+              </v-col>
             </v-row>
           </template>
           <template #title>
             {{ tarefa.nome }}
           </template>
           <template #append>
-            <v-btn density="compact" color="red" :icon="true" variant="elevated" @click="excluir(index)">
+            <v-btn density="compact" color="red" :icon="true" variant="elevated" @click="excluir(tarefa.id)">
               <font-awesome-icon :icon="['fas', 'trash-can']"/>
             </v-btn>
           </template>
@@ -35,35 +37,43 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
-import Tarefa from "@/model/Tarefa";
+import {onMounted, ref} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import store from "@/store";
+import Tarefa from "@/model/Tarefa";
 
 const nomeTarefa = ref('');
-const tarefas: Tarefa[] = reactive([]);
+const loading = ref(true);
 
-function handleKeyUp(event: KeyboardEvent) {
+onMounted(() => {
+  setTimeout(() => {
+    loading.value = false;
+  }, 3000);
+});
+
+async function handleKeyUp(event: KeyboardEvent) {
   if (event.key === 'Enter') {
-    const tarefa = gerarTarefa();
+    loading.value = true;
+
+    // const tarefa = await store.dispatch('criar', nomeTarefa.value);
+    const tarefa: Tarefa = new Tarefa(nomeTarefa.value);
+    tarefa.id = store.state.proximoId;
+    store.commit('adicionar', tarefa);
+    store.state.proximoId++;
+
     if (event.ctrlKey) {
       tarefa.doing = true;
     }
+
+    nomeTarefa.value = '';
+    loading.value = false;
   }
 }
 
-function gerarTarefa() {
-  const nextId = tarefas.length === 0 ? 1 : Math.max(...tarefas.map((tarefa) => tarefa.id)) + 1;
-
-  const tarefa: Tarefa = new Tarefa(nomeTarefa.value);
-  tarefa.id = nextId;
-  tarefas.push(tarefa);
-  nomeTarefa.value = '';
-  return tarefa;
-}
-
-function excluir(index: number) {
-  const response = confirm(`Tem certeza que seja excluir a tarefa ${tarefas[index].nome} ?`);
-  if (response) tarefas.splice(index, 1);
+function excluir(id: number) {
+  const tarefa = store.getters.tarefa(id);
+  const response = confirm(`Tem certeza que seja excluir a tarefa ${tarefa.nome} ?`);
+  if (response) store.dispatch('excluir', tarefa);
 }
 
 </script>
