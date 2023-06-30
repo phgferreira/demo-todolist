@@ -41,7 +41,6 @@
 import {onMounted, ref} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import store from "@/store";
-import Tarefa from "@/model/Tarefa";
 
 const nomeTarefa = ref('');
 const loading = ref(true);
@@ -56,12 +55,7 @@ async function handleKeyUp(event: KeyboardEvent) {
   if (event.key === 'Enter') {
     loading.value = true;
 
-    // const tarefa = await store.dispatch('criar', nomeTarefa.value);
-    const tarefa: Tarefa = new Tarefa(nomeTarefa.value);
-    tarefa.id = store.state.proximoId;
-    store.commit('adicionar', tarefa);
-    store.state.proximoId++;
-
+    const tarefa = await store.dispatch('criar', nomeTarefa.value);
     if (event.ctrlKey) {
       tarefa.doing = true;
     }
@@ -72,9 +66,11 @@ async function handleKeyUp(event: KeyboardEvent) {
 }
 
 function excluir(id: number) {
-  const tarefa = store.getters.tarefa(id);
-  const response = confirm(`Tem certeza que seja excluir a tarefa ${tarefa.nome} ?`);
-  if (response) store.dispatch('excluir', tarefa);
+  const tarefa = store.state.tarefas.find((tar) => tar.id === id);
+  if (tarefa) {
+    const response = confirm(`Tem certeza que seja excluir a tarefa ${tarefa.nome} ?`);
+    if (response) store.dispatch('excluir', tarefa.id);
+  }
 }
 
 </script>

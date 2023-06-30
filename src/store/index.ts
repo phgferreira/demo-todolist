@@ -20,14 +20,18 @@ export default createStore({
         },
     },
     actions: {
-        async criar(state, nome: string) {
+        async criar(context, nome: string) {
             setTimeout(() => {
-                console.log(`Tarefa ${nome} criada com sucesso`);
+                const tarefa: Tarefa = new Tarefa(nome);
+                tarefa.id = context.state.proximoId;
+                context.commit('adicionar', tarefa);
+                context.state.proximoId++;
             }, 3000);
         },
-        async excluir(state, id: number) {
+        async excluir(context, id: number) {
             setTimeout(() => {
-                console.log(`Tarefa de id ${id} excluída com sucesso`);
+                const indice = context.state.tarefas.findIndex((tarefa) => tarefa.id === id);
+                context.state.tarefas.splice(indice);
             }, 3000);
         }
     },
