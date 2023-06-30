@@ -32,6 +32,7 @@
           <template #subtitle>descrição</template>
         </v-list-item>
       </v-list>
+      <v-footer>{{store.getters.concluido}}/{{store.getters.total}}</v-footer>
     </v-container>
   </v-app>
 </template>

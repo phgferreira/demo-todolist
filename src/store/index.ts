@@ -7,8 +7,11 @@ export default createStore({
         proximoId: 2,
     },
     getters: {
-        tarefa(state, id: number) {
-            return state.tarefas.find((tarefa) => tarefa.id === id);
+        concluido(state) {
+            return state.tarefas.filter((tarefa) => tarefa.done).length;
+        },
+        total(state) {
+            return state.tarefas.length;
         }
     },
     mutations: {
