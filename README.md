@@ -83,7 +83,3 @@ Também é necessário inserir os seguintes importes no `main.ts`:
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/dist/vuetify.min.css'
 ```
-<br>
-
-## Funcionalidades e habilidades desenvolvidas
-- [ ]
