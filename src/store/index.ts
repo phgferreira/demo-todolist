@@ -21,18 +21,14 @@ export default createStore({
     },
     actions: {
         async criar(context, nome: string) {
-            setTimeout(() => {
-                const tarefa: Tarefa = new Tarefa(nome);
-                tarefa.id = context.state.proximoId;
-                context.commit('adicionar', tarefa);
-                context.state.proximoId++;
-            }, 3000);
+            const tarefa: Tarefa = new Tarefa(nome);
+            tarefa.id = context.state.proximoId;
+            context.commit('adicionar', tarefa);
+            context.state.proximoId++;
         },
         async excluir(context, id: number) {
-            setTimeout(() => {
-                const indice = context.state.tarefas.findIndex((tarefa) => tarefa.id === id);
-                context.state.tarefas.splice(indice);
-            }, 3000);
+            const indice = context.state.tarefas.findIndex((tarefa) => tarefa.id === id);
+            context.state.tarefas.splice(indice);
         }
     },
     modules: {}
