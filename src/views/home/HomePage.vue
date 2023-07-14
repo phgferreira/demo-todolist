@@ -47,13 +47,14 @@
 <script lang="ts" setup>
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import store from "@/store";
+import {ref} from "vue";
 
-let nomeTarefa = '';
+const nomeTarefa = ref('');
 
 function handleKeyUp(event: KeyboardEvent) {
   if (event.key === 'Enter') {
-    store.dispatch('criar', { nome: nomeTarefa, doing: event.ctrlKey});
-    nomeTarefa = '';
+    store.dispatch('criar', { nome: nomeTarefa.value, doing: event.ctrlKey});
+    nomeTarefa.value = '';
   }
 }
 
