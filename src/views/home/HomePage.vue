@@ -1,15 +1,14 @@
 <template>
-    <h1>Home Page</h1>
-    <v-container class="pa-16 container">
-      <v-text-field
-          v-model="nomeTarefa"
-          :autofocus="true"
-          placeholder="Digite a tarefa"
-          @keyup="handleKeyUp"
-      />
-
-      <lista-tarefas />
-    </v-container>
+  <h1>Home Page</h1>
+  <v-container class="pa-16 container">
+    <v-text-field
+        v-model="nomeTarefa"
+        :autofocus="true"
+        placeholder="Digite a tarefa"
+        @keyup="handleKeyUp"
+    />
+    <lista-tarefas />
+  </v-container>
 </template>
 
 <script lang="ts" setup>

@@ -26,15 +26,18 @@
 </template>
 
 <script setup lang="ts">
-import store from "@/store";
+import store from "../store";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-function excluir(id: number) {
+// FIXME: O loading está fechando antes da hora
+async function excluir(id: number) {
+  store.commit('startLoading', 'exclusao-loading');
   const tarefa = store.state.tarefas.find((tar) => tar.id === id);
   if (tarefa) {
     const response = confirm(`Tem certeza que seja excluir a tarefa ${tarefa.nome} ?`);
-    if (response) store.dispatch('excluir', tarefa.id);
+    if (response) await store.dispatch('excluir', tarefa.id);
   }
+  store.commit('stopLoading', 'exclusao-loading');
 }
 </script>
 

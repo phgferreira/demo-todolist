@@ -12,7 +12,7 @@ export default createStore({
         },
         total(state) {
             return state.tarefas.length;
-        }
+        },
     },
     mutations: {
         adicionar(state, tarefa: Tarefa): void {
@@ -27,7 +27,7 @@ export default createStore({
             context.commit('adicionar', tarefa);
             context.state.proximoId++;
         },
-        excluir(context, id: number) {
+        async excluir(context, id: number) {
             const indice = context.state.tarefas.findIndex((tarefa) => tarefa.id === id);
             context.state.tarefas.splice(indice);
         }
