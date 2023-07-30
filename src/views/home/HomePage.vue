@@ -6,6 +6,7 @@
         :autofocus="true"
         placeholder="Digite a tarefa"
         @keyup="handleKeyUp"
+        data-test="input"
     />
     <lista-tarefas />
   </v-container>
