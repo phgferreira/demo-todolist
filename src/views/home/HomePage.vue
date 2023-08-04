@@ -13,15 +13,15 @@
 </template>
 
 <script lang="ts" setup>
-import store from "@/store";
-import {ref} from "vue";
-import ListaTarefas from "@/components/ListaTarefas.vue";
+import store from '@/store';
+import { ref } from 'vue';
+import ListaTarefas from '@/components/ListaTarefas.vue';
 
 const nomeTarefa = ref('');
 
-function handleKeyUp(event: KeyboardEvent) {
+function handleKeyUp (event: KeyboardEvent) {
   if (event.key === 'Enter') {
-    store.dispatch('criar', { nome: nomeTarefa.value, doing: event.ctrlKey});
+    store.dispatch('criar', { nome: nomeTarefa.value, doing: event.ctrlKey });
     nomeTarefa.value = '';
   }
 }

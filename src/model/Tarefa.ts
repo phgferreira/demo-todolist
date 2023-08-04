@@ -4,8 +4,8 @@ export default class Tarefa {
     doing = false;
     done = false;
 
-    constructor(nome: string) {
-        this.id = 0;
-        this.nome = nome;
+    constructor (nome: string) {
+      this.id = 0;
+      this.nome = nome;
     }
 }

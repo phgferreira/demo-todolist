@@ -1,5 +1,12 @@
+import { shallowMount } from '@vue/test-utils';
+import HelloWorld from '@/components/HelloWorld.vue';
+
 describe('HelloWorld.vue', () => {
   it('renders props.msg when passed', () => {
-    expect(0).toEqual(0);
+    const msg = 'new message';
+    const wrapper = shallowMount(HelloWorld, {
+      props: { msg }
+    });
+    expect(wrapper.text()).toMatch(msg);
   });
 });

@@ -1,5 +1,9 @@
 <template>
   <v-app>
-    <router-view/>
+    <home-page/>
   </v-app>
 </template>
+
+<script setup lang="ts">
+import HomePage from '@/views/home/HomePage.vue';
+</script>

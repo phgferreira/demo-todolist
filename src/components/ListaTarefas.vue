@@ -26,11 +26,11 @@
 </template>
 
 <script setup lang="ts">
-import store from "../store";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import store from '../store';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 // FIXME: O loading está fechando antes da hora
-async function excluir(id: number) {
+async function excluir (id: number) {
   store.commit('startLoading', 'exclusao-loading');
   const tarefa = store.state.tarefas.find((tar) => tar.id === id);
   if (tarefa) {
