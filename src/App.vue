@@ -1,9 +1,11 @@
 <template>
   <v-app>
-    <home-page/>
+    <v-main>
+      <home-page />
+    </v-main>
   </v-app>
 </template>
 
 <script setup lang="ts">
-import HomePage from '@/views/home/HomePage.vue';
+  import HomePage from "@/views/HomePage.vue";
 </script>
