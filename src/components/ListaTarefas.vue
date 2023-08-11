@@ -16,7 +16,7 @@
       <v-sheet class="botao-excluir">
         <v-btn density="compact" color="red" variant="elevated"
                :icon="true" @click="excluir(tarefa.id)">
-          <font-awesome-icon :icon="['fas', 'trash-can']"/>
+<!--          <font-awesome-icon :icon="['fas', 'trash-can']"/>-->
         </v-btn>
       </v-sheet>
     </template>
