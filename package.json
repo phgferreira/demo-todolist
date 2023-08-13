@@ -22,10 +22,12 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
+    "@types/sinon": "^10.0.16",
     "@types/webfontloader": "^1.6.35",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/test-utils": "^2.4.1",
     "jsdom": "^22.1.0",
+    "sinon": "^15.2.0",
     "typescript": "^4.0.0",
     "vite": "^3.0.9",
     "vitest": "^0.34.1",

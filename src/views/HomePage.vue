@@ -5,7 +5,7 @@
         v-model="nomeTarefa"
         :autofocus="true"
         placeholder="Digite a tarefa"
-        @keyup="handleKeyUp"
+        @keyup.prevent="handleKeyUp"
         data-test="input"
     />
     <lista-tarefas />

@@ -3,7 +3,7 @@ import Tarefa from '@/model/Tarefa';
 
 export default createStore({
   state: {
-    tarefas: [{ id: 1, nome: 'Tarefa de Teste', doing: false, done: false }] as Tarefa[],
+    tarefas: [] as Tarefa[],
     proximoId: 2
   },
   getters: {
