@@ -5,6 +5,7 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 // Utilities
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
+import {configDefaults} from "vitest/config";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -39,6 +40,7 @@ export default defineConfig({
     environment: 'jsdom',
     server: {
       deps: {inline: ["vuetify"]}
-    }
+    },
+    setupFiles: ['./vitest/setup.ts']
   }
-})
+});
